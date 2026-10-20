@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkHub Global — Career & Job Portal</title>
+    
+    <!-- Google Site Verification Tag -->
+    <meta name="google-site-verification" content="3ObiplstuleBbpGLx2I-kPMYcVWcDMWxoVXxkjEstC8" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800 antialiased min-h-screen flex flex-col bg-slate-50">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo & Brand Name -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="resetFilters()">
+                    <div class="bg-gradient-to-tr from-emerald-600 to-teal-700 text-white p-2.5 rounded-xl shadow-md">
+                        <i class="fa-solid fa-briefcase text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-emerald-700 to-teal-800 bg-clip-text text-transparent">WorkHub</span>
+                        <span class="text-xs font-semibold uppercase tracking-wider block text-slate-500">Global Opportunities</span>
+                    </div>
+                </div>
+
+                <!-- Header Actions & Badges -->
+                <div class="flex items-center space-x-3 sm:space-x-6">
+                    <button onclick="toggleSavedFilter()" class="relative inline-flex items-center space-x-2 text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors p-2 rounded-lg hover:bg-slate-50">
+                        <i class="fa-regular fa-bookmark text-lg text-emerald-600"></i>
+                        <span class="hidden sm:inline">Saved</span>
+                        <span id="savedBadge" class="bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full text-xs">0</span>
+                    </button>
+
+                    <button onclick="toggleAppliedFilter()" class="relative inline-flex items-center space-x-2 text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-slate-50">
+                        <i class="fa-regular fa-paper-plane text-lg text-blue-600"></i>
+                        <span class="hidden sm:inline">Applied</span>
+                        <span id="appliedBadge" class="bg-blue-100 text-blue-700 font-bold px-2 py-0.5 rounded-full text-xs">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION & SEARCH -->
+    <section class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-800 text-white py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-emerald-400 blur-3xl"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-teal-500 blur-3xl"></div>
+        </div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
+                Find Work in <span class="bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">Every Industry</span> worldwide
+            </h1>
+            <p class="text-slate-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto">
+                Explore thousands of verified openings in Tech, Skilled Trades, Healthcare, Creative, Remote, Gig, Hospitality, and Corporate careers.
+            </p>
+
+            <!-- Search Bar -->
+            <div class="bg-white/10 backdrop-blur-md p-2 rounded-2xl shadow-2xl border border-white/20 max-w-3xl mx-auto">
+                <div class="flex flex-col sm:flex-row items-center gap-2">
+                    <div class="relative w-full">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input id="searchInput" type="text" placeholder="Search by job title, industry, company, skill, or location..."
+                            class="w-full pl-11 pr-4 py-3.5 bg-white text-slate-900 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-inner"
+                            oninput="handleSearch()">
+                    </div>
+                    <button onclick="clearSearch()" class="w-full sm:w-auto px-6 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 shrink-0">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        <span>Reset</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+
+        <!-- CATEGORY FILTERS & HEADER STATS -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <!-- Filter Chips -->
+            <div class="flex items-center space-x-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none" id="categoryChips">
+                <!-- Dynamic Chips populated via JS -->
+            </div>
+
+            <!-- Job Count Indicator -->
+            <div class="text-sm font-medium text-slate-500 shrink-0 flex items-center gap-2">
+                <span>Showing</span>
+                <span id="jobCountBadge" class="bg-slate-200 text-slate-800 px-2.5 py-0.5 rounded-full font-bold text-xs">100</span>
+                <span>Positions</span>
+            </div>
+        </div>
+
+        <!-- JOB LISTINGS GRID -->
+        <div id="jobsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamic Job Cards JS -->
+        </div>
+
+        <!-- EMPTY STATE -->
+        <div id="emptyState" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300 my-8">
+            <div class="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-1">No matching opportunities found</h3>
+            <p class="text-slate-500 text-sm max-w-md mx-auto mb-6">Try adjusting your search query, clearing filters, or browsing other job categories.</p>
+            <button onclick="resetFilters()" class="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+                Clear All Filters
+            </button>
+        </div>
+    </main>
+
+    <!-- APPLICATION & PAYMENT MODAL -->
+    <div id="applicationModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden my-8 transform transition-all">
+            
+            <!-- Modal Header -->
+            <div class="bg-slate-900 text-white p-6 relative">
+                <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+                <span id="modalIndustryBadge" class="inline-block px-2.5 py-1 bg-emerald-500/20 text-emerald-300 text-xs font-semibold rounded-md mb-2">Technology</span>
+                <h3 id
+  
